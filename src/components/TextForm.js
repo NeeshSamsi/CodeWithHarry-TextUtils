@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 
-const TextForm = ({ heading, isDarkMode }) => {
+const TextForm = ({ heading, showAlert, isDarkMode }) => {
   // State
   const [text, setText] = useState("");
 
   // Utils
   const capitalize = (word) => {
-    const loweredCase = word.toLowerCase();
-    return word[0].toUpperCase() + loweredCase.slice(1);
+    if (word === "") {
+      return word;
+    } else {
+      const loweredCase = word.toLowerCase();
+      return word[0].toUpperCase() + loweredCase.slice(1);
+    }
   };
 
   // Event Handlers
   const upperCaseClickHandler = (e) => {
     setText(text.toUpperCase());
+
+    showAlert("Converted to UpperCase!", "Success");
   };
   const titleCaseClickHandler = (e) => {
     const titleCase = text
@@ -21,12 +27,18 @@ const TextForm = ({ heading, isDarkMode }) => {
       .map((word) => capitalize(word))
       .join(" ");
     setText(titleCase);
+
+    showAlert("Converted to TitleCase!", "Success");
   };
   const lowerCaseClickHandler = (e) => {
     setText(text.toLowerCase());
+
+    showAlert("Converted to LowerCase!", "Success");
   };
   const clearHandler = (e) => {
     setText("");
+
+    showAlert("Text was Cleared!", "Success");
   };
   const changeHandler = (e) => {
     setText(e.target.value);
@@ -71,7 +83,10 @@ const TextForm = ({ heading, isDarkMode }) => {
           Clear Text
         </button>
         <button
-          onClick={() => navigator.clipboard.writeText(text)}
+          onClick={() => {
+            navigator.clipboard.writeText(text);
+            showAlert("Copied to Clipboard.", "Success");
+          }}
           className="btn btn-primary mx-2"
         >
           Copy Text
