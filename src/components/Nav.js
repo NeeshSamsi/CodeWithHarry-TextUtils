@@ -1,8 +1,14 @@
 import React from "react";
 
-const Nav = ({ title }) => {
+const Nav = ({ title, isDarkMode, toggleMode }) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav
+      className={
+        isDarkMode
+          ? "navbar navbar-expand-lg navbar-dark bg-dark"
+          : "navbar navbar-expand-lg navbar-light bg-light"
+      }
+    >
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           {title}
@@ -31,6 +37,26 @@ const Nav = ({ title }) => {
               </a>
             </li>
           </ul>
+          <div
+            className={
+              isDarkMode
+                ? "form-check form-switch text-light"
+                : "form-check form-switch text-dark"
+            }
+          >
+            <input
+              onClick={toggleMode}
+              className="form-check-input"
+              type="checkbox"
+              id="flexSwitchCheckDefault"
+            />
+            <label
+              className="form-check-label"
+              htmlFor="flexSwitchCheckDefault"
+            >
+              Enable Dark Mode
+            </label>
+          </div>
         </div>
       </div>
     </nav>

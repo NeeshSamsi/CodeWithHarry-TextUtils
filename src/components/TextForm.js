@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const TextForm = ({ heading }) => {
+const TextForm = ({ heading, isDarkMode }) => {
   // State
   const [text, setText] = useState("");
 
@@ -34,8 +34,11 @@ const TextForm = ({ heading }) => {
 
   return (
     <>
-      <div className="container">
-        <h1>{heading}</h1>
+      <div
+        className="container"
+        style={{ color: isDarkMode ? "white" : "black" }}
+      >
+        <h1 style={{ color: isDarkMode ? "white" : "black" }}>{heading}</h1>
         <div className="mb-3">
           <textarea
             value={text}
@@ -43,6 +46,10 @@ const TextForm = ({ heading }) => {
             className="form-control"
             id="myBox"
             rows="8"
+            style={{
+              backgroundColor: isDarkMode ? "#363636" : "white",
+              color: isDarkMode ? "white" : "black",
+            }}
           ></textarea>
         </div>
         <button onClick={upperCaseClickHandler} className="btn btn-primary">
@@ -69,18 +76,22 @@ const TextForm = ({ heading }) => {
         >
           Copy Text
         </button>
-      </div>
-      <div className="container my-3">
-        <h1>Your text summary</h1>
-        <p>
-          {text.split(" ").filter((word) => word).length} words, {text.length}{" "}
-          characters
-        </p>
-        <p>
-          {0.008 * text.split(" ").filter((word) => word).length} minute read
-        </p>
-        <h2>Preview</h2>
-        <p>{text}</p>
+        <div className="my-3">
+          <h1>Your text summary</h1>
+          <p>
+            {text.split(" ").filter((word) => word).length} words, {text.length}{" "}
+            characters
+          </p>
+          <p>
+            {0.008 * text.split(" ").filter((word) => word).length} minute read
+          </p>
+          <h2>Preview</h2>
+          <p>
+            {text.length > 0
+              ? text
+              : "Enter your text above to Preview it here."}
+          </p>
+        </div>
       </div>
     </>
   );
