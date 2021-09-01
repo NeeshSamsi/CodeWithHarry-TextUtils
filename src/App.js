@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import About from "./components/About";
-import Alert from "./components/Alert";
 import Nav from "./components/Nav";
+import Alert from "./components/Alert";
 import TextForm from "./components/TextForm";
+import About from "./components/About";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -33,18 +34,24 @@ function App() {
   };
 
   return (
-    <>
+    <Router>
       <Nav title="TextUtils" isDarkMode={isDarkMode} toggleMode={toggleMode} />
       <Alert alert={alert} />
-      <div className="container my-3">
-        <TextForm
-          heading="Enter the text to analize below"
-          showAlert={showAlert}
-          isDarkMode={isDarkMode}
-        />
-        {/* <About /> */}
-      </div>
-    </>
+      <Switch>
+        <Route exact path="/about">
+          <About />
+        </Route>
+        <Route exact path="/">
+          <div className="container my-3">
+            <TextForm
+              heading="Enter the text to analize below"
+              showAlert={showAlert}
+              isDarkMode={isDarkMode}
+            />
+          </div>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
